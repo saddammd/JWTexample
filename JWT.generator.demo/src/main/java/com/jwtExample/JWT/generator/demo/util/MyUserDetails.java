@@ -9,25 +9,39 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.jwtExample.JWT.generator.demo.entity.Customer;
+import com.jwtExample.JWT.generator.demo.entity.Users;
 
 public class MyUserDetails implements UserDetails {
 	
-	private Customer customer;
+	private List<GrantedAuthority> authorities;
+	
+	private Users users;
 	
 	@Autowired
-	public MyUserDetails(Customer customer) {
+	public MyUserDetails(Users users) {
 		
-		this.customer=customer;
+		this.users=users;
 	}
 
 	
 	
+	public void setAuthorities(List<GrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
+
+
+
+	public MyUserDetails() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
-		List<GrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new SimpleGrantedAuthority(customer.getRoles()));
+		this.authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(users.getRoles()));
 		
 		return authorities;
 	}
@@ -35,13 +49,13 @@ public class MyUserDetails implements UserDetails {
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return customer.getPass();
+		return users.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return customer.getEmail();
+		return users.getUsername();
 	}
 
 	@Override

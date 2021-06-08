@@ -1,9 +1,9 @@
 package com.jwtExample.JWT.generator.demo.service;
 
-import com.jwtExample.JWT.generator.demo.entity.Customer;
+import com.jwtExample.JWT.generator.demo.entity.Users;
 
 public interface CustomerService {
 	
-	public Customer findByEmail(String username);
+	public Users findByUsername(String username);
 
 }

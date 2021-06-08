@@ -16,7 +16,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.jwtExample.JWT.generator.demo.entity.Customer;
+import com.jwtExample.JWT.generator.demo.entity.JwtRequest;
+import com.jwtExample.JWT.generator.demo.entity.Users;
 import com.jwtExample.JWT.generator.demo.service.CustomerServiceImpl;
 import com.jwtExample.JWT.generator.demo.util.MyUserDetails;
 import com.jwtExample.JWT.generator.demo.util.MyUserDetailsService;
@@ -27,11 +28,6 @@ import com.jwtExample.JWT.generator.demo.util.MyUserDetailsService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	
-	  @Bean
-	  public UserDetailsService userDetailsService(CustomerServiceImpl
-	  customerServiceImpl) { return new MyUserDetailsService(customerServiceImpl);
-	  }
-	 
 	
 	@Autowired
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -39,26 +35,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
 	
+	@Autowired
+	private MyUserDetailsService myUserDetailsService;
+	
 		
-	//@Autowired
-	//public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		//auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
-	//}
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
+	}
+	
 	
 	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+	public JwtRequest jwtRequest() {
+		return new JwtRequest();
 	}
+	
+	 @Bean
+	 @Override public AuthenticationManager authenticationManagerBean() throws
+	 Exception { return super.authenticationManagerBean(); }
+	
 
 	@Bean
-	public Customer customer() {
-		return new Customer();
+	public Users users() {
+		return new Users();
 	}
 	
 	@Bean
-	public UserDetails userDetails(Customer customer) {
-		return new MyUserDetails(customer);
+	public UserDetails userDetails(Users users) {
+		return new MyUserDetails(users);
 	}
 
 	

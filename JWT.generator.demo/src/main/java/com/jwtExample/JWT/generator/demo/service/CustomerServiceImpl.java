@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.jwtExample.JWT.generator.demo.dao.CustomerDao;
-import com.jwtExample.JWT.generator.demo.entity.Customer;
+import com.jwtExample.JWT.generator.demo.entity.Users;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -19,13 +19,13 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	
 	@Override
-	public Customer findByEmail(String username) {
+	public Users findByUsername(String username) {
 		
-		Customer cust = customerDao.findByEmail(username);
+		Users users = customerDao.findByUsername(username);
 		
-		if(cust!=null) {
+		if(users!=null) {
 			
-			return cust;
+			return users;
 		}
 		
 		else {

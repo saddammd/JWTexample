@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.jwtExample.JWT.generator.demo.service.CustomerServiceImpl;
+import com.jwtExample.JWT.generator.demo.util.MyUserDetails;
 import com.jwtExample.JWT.generator.demo.util.MyUserDetailsService;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -29,6 +30,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	public MyUserDetailsService myUserDetailsService() {
 		return new MyUserDetailsService();
 	}
+	
 	
 	@Autowired
 	private MyUserDetailsService myUserDetailsService;
